@@ -6,7 +6,11 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 	scope.userlist = [];
 	scope.username = 'ramesh';
 	scope.sharedbylist = [];
+	scope.billItems = [];
 	
+	scope.isSharedByListEmpty =  function() {
+		return !scope.sharedbylist.length;	
+	}
 	
 	scope.userAdd = function(user) {
 		var index = scope.userlist.indexOf(user);
@@ -24,6 +28,11 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 		} else {
 			scope.sharedbylist.splice(index, 1);
 		}
+	}
+	
+	scope.addBillItems = function(billForm) {
+		billItem = new Object();
+		billItem.itemName = scope.itemName;
 	}
 
 

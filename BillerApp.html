@@ -13,18 +13,26 @@
 <p>{{userlist}}</p>
 <hr />
 <h3><center>Bill Items</center></h3>
-Item Name : <input type="text" ng-model="itemName" required/><br>
-Bill Date : <input type="date" ng-model="billDate" required/><br>
-Paid By : <select ng-model="paidby">
+<form name="billItemsForm" ng-submit="addBillItems(billItemsForm)">
+Item Name : <input name="itemName" type="text" ng-model="itemname" required/>
+<span class="error" ng-show="billItemsForm.itemName.$error.required">Required!</span><br>
+Bill Date : <input name="billDate" type="date" ng-model="billdate" required/>
+<span class="error" ng-show="billItemsForm.billDate.$error.required">Required!</span><br>
+Paid By : <select name="paidBy" ng-model="paidby" required>
+<option value ="">select a user</option>
 <option value="{{user}}" ng-repeat="user in userlist">{{user}}</option>
-</select><br>
-Shared By : <br>
+</select>
+<span class="error" ng-show="billItemsForm.paidBy.$error.required">Required!</span><br>
+Shared By :<span class="error" ng-show="isSharedByListEmpty()">Required!</span><br>
 <span ng-repeat="user in userlist">
-<input type="checkbox" ng-click="updateSharedBy(user)"/>{{user}}<br>
+<input name="sharedBy" type="checkbox" ng-click="updateSharedBy(user)" />{{user}}<br>
 </span>
-<button ng-click="">Add</button><br>
-{{sharedbylist}}
-
+<input type="submit" value="Add Bill Item" ng-disabled="billItemsForm.$invalid || isSharedByListEmpty()"/><br>
+{{sharedbylist}}<br>
+{{billItemsForm.$invalid}}
+{{isSharedByListEmpty()}}
+{{billItemsForm.$invalid || isSharedByListEmpty()}}
+<form>
 </body>
 
 </html>
