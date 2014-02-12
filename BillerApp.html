@@ -28,11 +28,27 @@ Shared By :<span class="error" ng-show="isSharedByListEmpty()">Required!</span><
 <input name="sharedBy" type="checkbox" ng-click="updateSharedBy(user)" />{{user}}<br>
 </span>
 <input type="submit" value="Add Bill Item" ng-disabled="billItemsForm.$invalid || isSharedByListEmpty()"/><br>
-{{sharedbylist}}<br>
-{{billItemsForm.$invalid}}
-{{isSharedByListEmpty()}}
-{{billItemsForm.$invalid || isSharedByListEmpty()}}
 <form>
+<hr />
+<table border="1">
+	<tr>
+		<th>S.No</th>
+        <th>Item Name</th>
+        <th>Date</th>
+        <th>Paid By</th>
+        <th>Shared By</th>
+	</tr>
+    <tr ng-repeat="billItem in billItems">
+    	<td>1</td>
+    	<td>{{billItem.itemname}}</td>
+        <td>{{billItem.billdate}}</td>
+        <td>{{billItem.paidby}}</td>
+        <td><span ng-repeat="shareby in billItem.sharedbylist">
+        		{{shareby}},
+        	</span>
+        </td>
+    </tr>
+</table>
 </body>
 
 </html>

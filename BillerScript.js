@@ -32,7 +32,11 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 	
 	scope.addBillItems = function(billForm) {
 		billItem = new Object();
-		billItem.itemName = scope.itemName;
+		billItem.itemname = scope.itemname;
+		billItem.billdate = scope.billdate;
+		billItem.paidby = scope.paidby;
+		billItem.sharedbylist = scope.sharedbylist;
+		scope.billItems.push(billItem);
 	}
 
 
