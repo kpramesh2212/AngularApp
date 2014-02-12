@@ -7,17 +7,21 @@
 <script src="BillerScript.js"></script>
 </head>
 <body ng-controller="BillerController">
+<h3><center>Add Users To Bill</center></h3>
 <input type="text" ng-model="username"/><br>
 <button ng-click="userAdd(username)">Add</button><br>
 <p>UserName List : </p>
 <p>{{userlist}}</p>
 <hr />
-<h3><center>Bill Items</center></h3>
+<h3><center>Add Items to Bill</center></h3>
 <form name="billItemsForm" ng-submit="addBillItems(billItemsForm)">
 Item Name : <input name="itemName" type="text" ng-model="itemname" required/>
 <span class="error" ng-show="billItemsForm.itemName.$error.required">Required!</span><br>
 Bill Date : <input name="billDate" type="date" ng-model="billdate" required/>
 <span class="error" ng-show="billItemsForm.billDate.$error.required">Required!</span><br>
+Amount : <input name="amount" type="number" min="1" ng-model="amount" required/>
+<span class="error" ng-show="billItemsForm.amount.$error.required">Required!</span>
+<span class="error" ng-show="billItemsForm.amount.$error.min">Minimum amount should be greater than 0</span><br>
 Paid By : <select name="paidBy" ng-model="paidby" required>
 <option value ="">select a user</option>
 <option value="{{user}}" ng-repeat="user in userlist">{{user}}</option>
@@ -30,18 +34,21 @@ Shared By :<span class="error" ng-show="isSharedByListEmpty()">Required!</span><
 <input type="submit" value="Add Bill Item" ng-disabled="billItemsForm.$invalid || isSharedByListEmpty()"/><br>
 <form>
 <hr />
+<h3><center>Bill Items</center></h3>
 <table border="1">
 	<tr>
 		<th>S.No</th>
         <th>Item Name</th>
         <th>Date</th>
+        <th>Amount</th>
         <th>Paid By</th>
         <th>Shared By</th>
 	</tr>
     <tr ng-repeat="billItem in billItems">
-    	<td>1</td>
+    	<td>{{$index + 1}}</td>
     	<td>{{billItem.itemname}}</td>
         <td>{{billItem.billdate}}</td>
+        <td>{{billItem.amount}}</td>
         <td>{{billItem.paidby}}</td>
         <td><span ng-repeat="shareby in billItem.sharedbylist">
         		{{shareby}},

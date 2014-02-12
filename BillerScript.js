@@ -35,6 +35,7 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 		billItem.itemname = scope.itemname;
 		billItem.billdate = scope.billdate;
 		billItem.paidby = scope.paidby;
+		billItem.amount = scope.amount;
 		billItem.sharedbylist=angular.copy(scope.sharedbylist);
 		scope.billItems.push(billItem);
 	}
