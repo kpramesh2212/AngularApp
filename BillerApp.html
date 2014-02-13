@@ -51,7 +51,8 @@ Shared By :<span class="error" ng-show="isSharedByListEmpty()">Required!</span><
         <td>{{billItem.amount}}</td>
         <td>{{billItem.paidby}}</td>
         <td><span ng-repeat="shareby in billItem.sharedbylist">
-        		{{shareby}},
+        		<span ng-if="!$last">{{shareby}},</span>
+        		<span ng-if="$last">{{shareby}}</span>
         	</span>
         </td>
     </tr>
