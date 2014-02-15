@@ -7,91 +7,23 @@
 <script src="BillerScript.js"></script>
 </head>
 <body ng-controller="BillerController">
-<h3><center>Add Users To Bill</center></h3>
-<input type="text" ng-model="username"/><br>
-<button ng-click="userAdd(username)">Add</button><br>
-<p>UserName List : </p>
-<p>{{getUsers()}}</p>
-<hr />
-<h3><center>Add Items to Bill</center></h3>
-<form name="billItemsForm" ng-submit="addBillItems(billItemsForm)">
-<table>
+<table width="30%" style="float:left">
 	<tr>
-    	<td>Item Name</td>
-        <td>:</td>
-        <td><input name="itemName" type="text" ng-model="itemname" required/></td>
-        <td><span class="error" ng-show="billItemsForm.itemName.$error.required">Required!</span></td>
+    	<td colspan="2"><h3>Add Users To Bill</h3></td>
     </tr>
     <tr>
-    	<td>Bill Date</td>
-        <td>:</td>
-        <td><input name="billDate" type="date" ng-model="billdate" required/></td>
-        <td><span class="error" ng-show="billItemsForm.billDate.$error.required">Required!</span></td>
+    	<td colspan="2"><input type="text" ng-model="username"/></td>
     </tr>
     <tr>
-    	<td>Amount</td>
-        <td>:</td>
-        <td><input name="amount" type="number" min="1" ng-model="amount" required/></td>
-        <td>
-        	<span class="error" ng-show="billItemsForm.amount.$error.required">Required!</span>
-           <span class="error" ng-show="billItemsForm.amount.$error.min">Minimum amount should be greater than 0</span>
-        </td>
-    </tr>
-    <tr>
-    	<td>Paid By</td>
-        <td>:</td>
-        <td>
-        	<select name="paidBy" ng-model="paidby" required>
-				<option value ="">select a user</option>
-				<option value="{{user}}" ng-repeat="user in getUsers()">{{user}}</option>
-			</select>
-        </td>
-        <td><span class="error" ng-show="billItemsForm.paidBy.$error.required">Required!</span></td>
-    </tr>
-    <tr>
-    	<td>Shared By</td>
-        <td>:</td>
-        <td>
-        	<span ng-repeat="user in getUsers()">
-				<input name="sharedBy" type="checkbox" ng-click="updateSharedBy(user)" />{{user}}<br>
-			</span>
-		 </td>
-        <td><span class="error" ng-show="isSharedByListEmpty()">Required!</span></td>
+    	<td colspan="2"><button ng-click="userAdd(username)">Add User</button></td>
     </tr>
 </table>
-<input type="submit" value="Add Bill Item" ng-disabled="billItemsForm.$invalid || isSharedByListEmpty()"/><br>
-<form>
-<hr />
-<h3><center>Bill Items</center></h3>
-<table border="1">
-	<tr>
-		<th>S.No</th>
-        <th>Item Name</th>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Paid By</th>
-        <th>Shared By</th>
-	</tr>
-    <tr ng-repeat="billItem in billItems">
-    	<td>{{$index + 1}}</td>
-    	<td>{{billItem.itemname}}</td>
-        <td>{{billItem.billdate}}</td>
-        <td>{{billItem.amount}}</td>
-        <td>{{billItem.paidby}}</td>
-        <td><span ng-repeat="shareby in billItem.sharedbylist">
-        		<span ng-if="!$last">{{shareby}},</span>
-        		<span ng-if="$last">{{shareby}}</span>
-        	</span>
-        </td>
-    </tr>
-</table>
-<hr/>
-<h3><center>Bill Expense Overview</center></h3>
-<table border="1">
-	<tr>
+<table   width="70%">
+	<tr><td colspan="5"><h3><center>User Expense Overview</center></h3></td></tr>
+	<tr bgcolor="#AE9B9B">
     	<th>S.No</th>
        <th>Username</th>
-       <th>credit Amount</th>
+       <th>Credit Amount</th>
        <th>Debit Amount</th>
        <th>Total Amount (+ = amount you will recieve, - = amount you should give)</th>
     </tr>
@@ -103,6 +35,88 @@
         <td>{{user.creditAmount + user.debitAmount}}</td>
     </tr>
 </table>
+<br>
+<hr />
+<form name="billItemsForm" ng-submit="addBillItems(billItemsForm)">
+ <table style="float:left" width="30%">
+ 	<tr>
+    	<td colspan="4"><h3><center>Bill Items</center></h3></td>
+    </tr>
+    <tr>
+      <td>Item Name</td>
+      <td>:</td>
+      <td><input name="itemName" type="text" ng-model="itemname" required/></td>
+      <td><span class="error" ng-show="billItemsForm.itemName.$error.required">Required!</span></td>
+    </tr>
+    <tr>
+        <td>Bill Date</td>
+        <td>:</td>
+        <td><input name="billDate" type="date" ng-model="billdate" required/></td>
+        <td><span class="error" ng-show="billItemsForm.billDate.$error.required">Required!</span></td>
+    </tr>
+    <tr>
+        <td>Amount</td>
+        <td>:</td>
+        <td><input name="amount" type="number" min="1" ng-model="amount" required/></td>
+        <td>
+            <span class="error" ng-show="billItemsForm.amount.$error.required">Required!</span>
+        <span class="error" ng-show="billItemsForm.amount.$error.min">Minimum amount should be greater than 0</span>
+        <span class="error" ng-show="billItemsForm.amount.$error.number">Please enter number only!</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Paid By</td>
+        <td>:</td>
+        <td>
+            <select name="paidBy" ng-model="paidby" required>
+                <option value ="">select a user</option>
+                <option value="{{user}}" ng-repeat="user in getUsers()">{{user}}</option>
+            </select>
+        </td>
+        <td><span class="error" ng-show="billItemsForm.paidBy.$error.required">Required!</span></td>
+    </tr>
+    <tr>
+        <td>Shared By</td>
+        <td>:</td>
+        <td>
+            <span ng-repeat="user in getUsers()">
+                <input name="sharedBy" type="checkbox" ng-click="updateSharedBy(user)" />{{user}}<br>
+            </span>
+        </td>
+        <td><span class="error" ng-show="isSharedByListEmpty()">Required!</span></td>
+    </tr>
+    <tr>
+    	<td colspan="4" style="text-align:left"><input type="submit" value="Add Bill Item" ng-disabled="billItemsForm.$invalid || isSharedByListEmpty()"/></td>
+    </tr>
+ <table>          
+ <table border="0" style="float:left" width="70%">
+	<tr>
+    	<td colspan="6"><h3><center>Bill Expense Overview</center></h3></td>
+    </tr>
+    <tr bgcolor="#AE9B9B">
+        <th>S.No</th>
+        <th>Item Name</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Paid By</th>
+        <th>Shared By</th>
+    </tr>
+    <tr ng-repeat="billItem in billItems">
+        <td>{{$index + 1}}</td>
+        <td>{{billItem.itemname}}</td>
+        <td>{{billItem.billdate}}</td>
+        <td>{{billItem.amount}}</td>
+        <td>{{billItem.paidby}}</td>
+        <td>
+        <span ng-repeat="shareby in billItem.sharedbylist">
+                <span ng-if="!$last">{{shareby}},</span>
+                <span ng-if="$last">{{shareby}}</span>
+            </span>
+        </td>
+    </tr>
+ </table>
+</form>
+
 </body>
 
 </html>
