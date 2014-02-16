@@ -18,7 +18,7 @@
     	<td colspan="2"><button ng-click="userAdd(username)">Add User</button></td>
     </tr>
 </table>
-<table   width="70%">
+<table width="60%">
 	<tr><td colspan="5"><h3><center>User Expense Overview</center></h3></td></tr>
 	<tr bgcolor="#AE9B9B">
     	<th>S.No</th>
@@ -28,13 +28,14 @@
        <th>Total Amount (+ = amount you will recieve, - = amount you should give)</th>
     </tr>
     <tr ng-repeat="user in users.values()">
-    	<td>{{$index + 1}}</td>
-        <td>{{user.name}}</td>
-        <td>{{user.creditAmount}}</td>
-        <td>{{user.debitAmount}}</td>
-        <td>{{user.creditAmount + user.debitAmount}}</td>
+    	<td style="text-align:center">{{$index + 1}}</td>
+       <td style="text-align:center">{{user.name}}</td>
+       <td style="text-align:center">{{user.creditAmount}}</td>
+       <td style="text-align:center">{{user.debitAmount}}</td>
+       <td style="text-align:center">{{user.creditAmount + user.debitAmount}}</td>
     </tr>
 </table>
+<br>
 <br>
 <hr />
 <form name="billItemsForm" ng-submit="addBillItems(billItemsForm)">
@@ -60,8 +61,8 @@
         <td><input name="amount" type="number" min="1" ng-model="amount" required/></td>
         <td>
             <span class="error" ng-show="billItemsForm.amount.$error.required">Required!</span>
-        <span class="error" ng-show="billItemsForm.amount.$error.min">Minimum amount should be greater than 0</span>
-        <span class="error" ng-show="billItemsForm.amount.$error.number">Please enter number only!</span>
+        	 <span class="error" ng-show="billItemsForm.amount.$error.min">Minimum amount should be greater than 0</span>
+        	 <span class="error" ng-show="billItemsForm.amount.$error.number">Please enter number only!</span>
         </td>
     </tr>
     <tr>
@@ -89,7 +90,7 @@
     	<td colspan="4" style="text-align:left"><input type="submit" value="Add Bill Item" ng-disabled="billItemsForm.$invalid || isSharedByListEmpty()"/></td>
     </tr>
  </table>          
- <table border="0" style="float:left" width="70%">
+ <table border="0" width="70%">
 	<tr>
     	<td colspan="6"><h3><center>Bill Items Overview</center></h3></td>
     </tr>
@@ -108,7 +109,7 @@
         <td>{{billItem.amount}}</td>
         <td>{{billItem.paidby}}</td>
         <td>
-        <span ng-repeat="shareby in billItem.sharedbylist">
+        	 <span ng-repeat="shareby in billItem.sharedbylist">
                 <span ng-if="!$last">{{shareby}},</span>
                 <span ng-if="$last">{{shareby}}</span>
             </span>
@@ -116,7 +117,79 @@
     </tr>
  </table>
 </form>
-
+<br>
+<div style="float:left;width:100%">
+    <hr />
+    <h3><center>User Bill Expense Detailed View</center></h3>
+    <div ng-repeat="user in users.keys()">
+        <div style="float:left;width:100%">
+        	<br><br>
+           <p><h4>{{user}}'s Detailed Expense</h4></p>
+           <br>
+        </div>
+        <table border="1" width="49%" style="float:left">
+            <tr>
+                <th colspan="7" bgcolor="#8BF19E"><center>{{user}}'s Credit Expenses</center></th>
+            </tr>
+            <tr bgcolor="#AE9B9B">
+                <th>S.No</th>
+                <th>Item Name</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Paid By</th>
+                <th>Shared By</th>
+                <th>Individual Share</th>
+            </tr>
+            <tr ng-repeat="creditItem in users.get(user).creditBillItemsList">
+                <td>{{$index + 1}}</td>
+                <td>{{creditItem.itemname}}</td>
+                <td>{{creditItem.billdate}}</td>
+                <td>{{creditItem.amount}}</td>
+                <td>{{creditItem.paidby}}</td>
+                <td>
+                    <span ng-repeat="shareby in creditItem.sharedbylist">
+                        <span ng-if="!$last">{{shareby}},</span>
+                        <span ng-if="$last">{{shareby}}</span>
+                    </span>
+                </td>
+                <td>{{creditItem.individualShare}}</td>
+            </tr>
+        </table><div style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <table border="1" width="49%" style="float:left">
+            <tr>
+                <th colspan="7" bgcolor="#FFC596"><center>{{user}}'s Debit Expenses</center></th>
+            </tr>
+            <tr bgcolor="#AE9B9B">
+                <th>S.No</th>
+                <th>Item Name</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Paid By</th>
+                <th>Shared By</th>
+                <th>Individual Share</th>
+            </tr>
+            <tr ng-repeat="debitItem in users.get(user).debitBillItemsList">
+                <td>{{$index + 1}}</td>
+                <td>{{debitItem.itemname}}</td>
+                <td>{{debitItem.billdate}}</td>
+                <td>{{debitItem.amount}}</td>
+                <td>{{debitItem.paidby}}</td>
+                <td>
+                    <span ng-repeat="shareby in debitItem.sharedbylist">
+                        <span ng-if="!$last">{{shareby}},</span>
+                        <span ng-if="$last">{{shareby}}</span>
+                    </span>
+                </td>
+                <td>{{debitItem.individualShare}}</td>
+            </tr>
+        </table>
+        <div style="width:100%;float:left">
+            <br>
+            <br>
+            <hr />
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
