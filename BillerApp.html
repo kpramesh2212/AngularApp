@@ -12,7 +12,7 @@
     	<td colspan="2"><h3>Add Users To Bill</h3></td>
     </tr>
     <tr>
-    	<td colspan="2"><input type="text" ng-model="username"/></td>
+    	<td colspan="2"><input type="text" ng-model="username" placeholder="Type in a username and click add user"/></td>
     </tr>
     <tr>
     	<td colspan="2"><button ng-click="userAdd(username)">Add User</button></td>
@@ -121,7 +121,8 @@
 <div style="float:left;width:100%">
     <hr />
     <h3><center>User Bill Expense Detailed View</center></h3>
-    <div ng-repeat="user in users.keys()">
+    Search : <input ng-model="searchText" placeholder="Type username to search"/>
+    <div ng-repeat="user in users.keys() | filter:searchText">
         <div style="float:left;width:100%">
         	<br><br>
            <p><h4>{{user}}'s Detailed Expense</h4></p>

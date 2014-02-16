@@ -3,7 +3,6 @@
 var app = angular.module('BillerApp', []);
 
 var controller = app.controller('BillerController', ['$scope', function(scope){
-	scope.username = 'ramesh';
 	scope.sharedbylist = [];
 	scope.billItems = [];
 	scope.users = new Dict();
