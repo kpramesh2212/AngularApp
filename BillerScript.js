@@ -4,9 +4,13 @@ var app = angular.module('BillerApp', []);
 
 var controller = app.controller('BillerController', ['$scope', function(scope){
 	scope.sharedbylist = [];
-	scope.billItems = [];
+	scope.billItems = new Dict();
 	scope.users = new Dict();
 	
+	var getId = function() {
+		var d = new Date();
+		return d.getTime();
+	}
 	
 	scope.getUsers = function() {
 		return scope.users.keys();
@@ -21,8 +25,8 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 		u.name = user;
 		u.creditAmount = 0;
 		u.debitAmount = 0;
-		u.creditBillItemsList = [];
-		u.debitBillItemsList = [];
+		u.creditBillItemsMap = new Dict();
+		u.debitBillItemsMap = new Dict();
 		scope.users.put(user, u);
 	};
 	
@@ -37,26 +41,26 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 	
 	scope.addBillItems = function(billForm) {
 		billItem = new Object();
+		billItem.id = getId();
 		billItem.itemname = scope.itemname;
 		billItem.billdate = scope.billdate;
 		billItem.paidby = scope.paidby;
 		billItem.amount = scope.amount;
 		billItem.sharedbylist=angular.copy(scope.sharedbylist);
 		billItem.individualShare = billItem.amount / billItem.sharedbylist.length;
-		scope.billItems.push(billItem);
+		scope.billItems.put(billItem.id, billItem);
 		
 		//now calculate individual expenses
 		var paidUser = scope.users.get(billItem.paidby);
 		paidUser.creditAmount = paidUser.creditAmount + scope.amount;
-		paidUser.creditBillItemsList.push(billItem);
+		paidUser.creditBillItemsMap.put(billItem.id, billItem);
 		
 		//now calculate debit expenses
 		for (var index in billItem.sharedbylist) {
 			var sharedUser = scope.users.get(billItem.sharedbylist[index]);
 			sharedUser.debitAmount = sharedUser.debitAmount - billItem.individualShare;
-			sharedUser.debitBillItemsList.push(billItem);
+			sharedUser.debitBillItemsMap.put(billItem.id, billItem);
 		}
-		
 		
 	}
 	
@@ -93,6 +97,17 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 	
 		this.hasKey = function(key) {
 			return (this.keyList.indexOf(key) < 0) ? false : true;
+		}
+		
+		this.remove = function(key) {
+			var index = this.keyList.indexOf(key);
+			if (index < 0) {
+				return false;
+			} else {
+				this.keyList.splice(index, 1);
+				this.valueList.splice(index, 1);
+				return true;ss
+			}
 		}
 	}
 	

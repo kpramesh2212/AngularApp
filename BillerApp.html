@@ -102,7 +102,7 @@
         <th>Paid By</th>
         <th>Shared By</th>
     </tr>
-    <tr ng-repeat="billItem in billItems">
+    <tr ng-repeat="billItem in billItems.values()">
         <td>{{$index + 1}}</td>
         <td>{{billItem.itemname}}</td>
         <td>{{billItem.billdate}}</td>
@@ -114,6 +114,9 @@
                 <span ng-if="$last">{{shareby}}</span>
             </span>
         </td>
+    </tr>
+    <tr>
+    	<td colspan="6"><button ng-show="billItems.length">Delete</button></td>
     </tr>
  </table>
 </form>
@@ -141,7 +144,7 @@
                 <th>Shared By</th>
                 <th>Individual Share</th>
             </tr>
-            <tr ng-repeat="creditItem in users.get(user).creditBillItemsList">
+            <tr ng-repeat="creditItem in users.get(user).creditBillItemsMap.values()">
                 <td>{{$index + 1}}</td>
                 <td>{{creditItem.itemname}}</td>
                 <td>{{creditItem.billdate}}</td>
@@ -155,7 +158,7 @@
                 </td>
                 <td>{{creditItem.individualShare}}</td>
             </tr>
-        </table><div style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </table><div style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <table border="1" width="49%" style="float:left">
             <tr>
                 <th colspan="7" bgcolor="#FFC596"><center>{{user}}'s Debit Expenses</center></th>
@@ -169,7 +172,7 @@
                 <th>Shared By</th>
                 <th>Individual Share</th>
             </tr>
-            <tr ng-repeat="debitItem in users.get(user).debitBillItemsList">
+            <tr ng-repeat="debitItem in users.get(user).debitBillItemsMap.values()">
                 <td>{{$index + 1}}</td>
                 <td>{{debitItem.itemname}}</td>
                 <td>{{debitItem.billdate}}</td>
