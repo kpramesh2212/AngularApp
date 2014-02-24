@@ -109,6 +109,10 @@ var controller = app.controller('BillerController', ['$scope', function(scope){
 				return true;ss
 			}
 		}
+		
+		this.length = function() {
+			return this.keyList.length;
+		}
 	}
 	
 	

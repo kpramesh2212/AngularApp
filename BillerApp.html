@@ -5,6 +5,7 @@
 <title>Biller Application</title>
 <script src="../AngularJs-src/angular.min.js"></script>
 <script src="BillerScript.js"></script>
+<link rel="stylesheet" type="text/css" href="BillerAppStyles.css">
 </head>
 <body ng-controller="BillerController">
 <table width="30%" style="float:left">
@@ -19,20 +20,20 @@
     </tr>
 </table>
 <table width="60%">
-	<tr><td colspan="5"><h3><center>User Expense Overview</center></h3></td></tr>
-	<tr bgcolor="#AE9B9B">
+	<tr><td colspan="5"><h3 class="center_class">User Expense Overview</h3></td></tr>
+	<tr bgcolor="#AE9B9B" class="center_class">
     	<th>S.No</th>
        <th>Username</th>
        <th>Credit Amount</th>
        <th>Debit Amount</th>
        <th>Total Amount (+ = amount you will recieve, - = amount you should give)</th>
     </tr>
-    <tr ng-repeat="user in users.values()">
-    	<td style="text-align:center">{{$index + 1}}</td>
-       <td style="text-align:center">{{user.name}}</td>
-       <td style="text-align:center">{{user.creditAmount}}</td>
-       <td style="text-align:center">{{user.debitAmount}}</td>
-       <td style="text-align:center">{{user.creditAmount + user.debitAmount}}</td>
+    <tr ng-repeat="user in users.values()" class="center_class">
+    	<td>{{$index + 1}}</td>
+       <td>{{user.name}}</td>
+       <td>{{user.creditAmount}}</td>
+       <td>{{user.debitAmount}}</td>
+       <td>{{user.creditAmount + user.debitAmount}}</td>
     </tr>
 </table>
 <br>
@@ -41,7 +42,7 @@
 <form name="billItemsForm" ng-submit="addBillItems(billItemsForm)">
  <table style="float:left" width="30%">
  	<tr>
-    	<td colspan="4"><h3><center>Add Bill Items</center></h3></td>
+    	<td colspan="4"><h3 class="center_class">Add Bill Items</h3></td>
     </tr>
     <tr>
       <td>Item Name</td>
@@ -90,9 +91,9 @@
     	<td colspan="4" style="text-align:left"><input type="submit" value="Add Bill Item" ng-disabled="billItemsForm.$invalid || isSharedByListEmpty()"/></td>
     </tr>
  </table>          
- <table border="0" width="70%">
+ <table border="0" width="70%" class="center_class">
 	<tr>
-    	<td colspan="6"><h3><center>Bill Items Overview</center></h3></td>
+    	<td colspan="6"><h3>Bill Items Overview</h3></td>
     </tr>
     <tr bgcolor="#AE9B9B">
         <th>S.No</th>
@@ -116,24 +117,24 @@
         </td>
     </tr>
     <tr>
-    	<td colspan="6"><button ng-show="billItems.length">Delete</button></td>
+    	<td colspan="6" style="text-align:left"><button ng-show="billItems.length()">Delete</button></td>
     </tr>
  </table>
 </form>
 <br>
-<div style="float:left;width:100%">
+<div class="div_float">
     <hr />
     <h3><center>User Bill Expense Detailed View</center></h3>
     Search : <input ng-model="searchText" placeholder="Type username to search"/>
     <div ng-repeat="user in users.keys() | filter:searchText">
-        <div style="float:left;width:100%">
+        <div class="div_float">
         	<br><br>
            <p><h4>{{user}}'s Detailed Expense</h4></p>
            <br>
         </div>
-        <table border="1" width="49%" style="float:left">
+        <table border="1" width="49%" class="center_float_left">
             <tr>
-                <th colspan="7" bgcolor="#8BF19E"><center>{{user}}'s Credit Expenses</center></th>
+                <th colspan="7" bgcolor="#8BF19E">{{user}}'s Credit Expenses</th>
             </tr>
             <tr bgcolor="#AE9B9B">
                 <th>S.No</th>
@@ -159,9 +160,9 @@
                 <td>{{creditItem.individualShare}}</td>
             </tr>
         </table><div style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-        <table border="1" width="49%" style="float:left">
+        <table border="1" width="49%" class="center_float_left">
             <tr>
-                <th colspan="7" bgcolor="#FFC596"><center>{{user}}'s Debit Expenses</center></th>
+                <th colspan="7" bgcolor="#FFC596">{{user}}'s Debit Expenses</th>
             </tr>
             <tr bgcolor="#AE9B9B">
                 <th>S.No</th>
@@ -187,7 +188,7 @@
                 <td>{{debitItem.individualShare}}</td>
             </tr>
         </table>
-        <div style="width:100%;float:left">
+        <div class="div_float">
             <br>
             <br>
             <hr />
